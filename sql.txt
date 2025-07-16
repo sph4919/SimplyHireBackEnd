@@ -1,0 +1,47 @@
+INSERT INTO services (service_type, service_description) VALUES ("Carpenting","Woods are curvy because they can be moulded");
+
+
+ALTER TABLE service_provider
+  ADD COLUMN short_description TEXT  NOT NULL;
+
+
+INSERT INTO service_provider
+  (name, email, password, job_type, description, rate, short_description)
+VALUES
+  ("Arjun", "arjun.plumb@gmail.com", "Plumb@123", "Plumbing",
+   "I specialize in residential plumbing repairs: leak detection, pipe replacement, and fixture installation. With over 5 years of experience I ensure safe water flow and efficient waste removal, keeping your home’s plumbing system in top condition.",
+   25,
+   "Professional plumbing repairs: leak detection, pipe replacement & fixture installation.");
+
+INSERT INTO service_provider
+  (name, email, password, job_type, description, rate, short_description)
+VALUES
+  ("Rahul", "rahul.carpentry@example.com", "RahulCarp!88", "Carpentry",
+   "Custom carpentry services including cabinet building, door and window framing, and trim work. I craft and install solid wood fixtures tailored to your space, using precision joinery and premium materials for lasting quality.",
+   20,
+   "Expert carpentry: custom cabinets, framing, and trim work with precision joinery.");
+
+INSERT INTO service_provider
+  (name, email, password, job_type, description, rate, short_description)
+VALUES
+  ("Neha", "neha.electro@gmail.com", "ElecNeh@2023", "Electrical",
+   "Comprehensive electrical services: wiring upgrades, panel installations, outlet & switch repairs, and lighting design. I follow all safety codes and use top-grade components to keep your home powered reliably and safely.",
+   22,
+   "Reliable electrical work: wiring upgrades, panel installs, and lighting solutions.");
+
+INSERT INTO service_provider
+  (name, email, password, job_type, description, rate, short_description)
+VALUES
+  ("Karan", "karan.painting@mail.com", "PaintPro#45", "Painting",
+   "Interior and exterior painting services: surface prep, priming, detailed trimming, and finish coats. I use low-VOC premium paints and ensure clean lines and even coverage for a beautiful, durable result.",
+   18,
+   "Professional painting: prep, priming, trim detail, and flawless finish coats.");
+
+INSERT INTO service_provider
+  (name, email, password, job_type, description, rate, short_description)
+VALUES
+  ("Priya", "priya.cleaning@home.com", "CleanUp2024!", "Cleaning",
+   "Deep-clean and regular housekeeping services: dusting, vacuuming, mopping, bathroom sanitization, and kitchen degreasing. I tailor each visit to your needs, using eco-friendly products for a healthy living space.",
+   15,
+   "Thorough cleaning: dusting, mopping, sanitizing bathrooms & kitchens with eco-friendly products.");
+
