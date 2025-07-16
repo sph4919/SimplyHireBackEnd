@@ -33,6 +33,9 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 
+app.get('/', (req, res) => {
+  res.send('✅ SimplyHire API is running');
+});
 
   
 let userEndPoints = require('./routes/userRoutes.js')
