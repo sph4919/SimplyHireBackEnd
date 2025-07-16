@@ -24,7 +24,8 @@ app.use(session({
 const corsOptions = {
   origin:  [
     'http://localhost:5500',
-    'http://127.0.0.1:5500'
+    'http://127.0.0.1:5500',
+    'https://github.com/sph4919'
   ],   
   credentials: true                 
 };
