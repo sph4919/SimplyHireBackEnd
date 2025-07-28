@@ -8,7 +8,7 @@ router.post('/serviceUserLogin', (req, res) => {
 
     const {email,password} = req.body;
     console.log("rq processing");  //for debugging
-    const query = 'SELECT serviceproviderid FROM service_provider WHERE email = ? AND password = ?';
+    const query = 'SELECT serviceprovider_id FROM service_provider WHERE email = ? AND password = ?';
     db.query(query, [email,password], (err, result) => {
      if(err)
        {
@@ -25,7 +25,7 @@ router.post('/serviceUserLogin', (req, res) => {
         const sessionId = req.sessionID;
         req.session.visted = true;
         console.log(sessionId); //for degugging
-        req.session.serviceProId = result[0].serviceproviderid;
+        req.session.serviceProId = result[0].serviceprovider_id;
         res.status(202).json({message:'Correct credentials'});
         
        }
@@ -67,7 +67,7 @@ router.post('/serviceSignup', (req, res) => {
 
   const sql = `
     INSERT INTO service_provider
-      (name, email, password, job_type, description, rate, short_description)
+      (name, email, password, job_type, description, rate, shortdescription)
     VALUES (?, ?, ?, ?, ?, ?, ?)
   `;
   db.query(
@@ -184,7 +184,7 @@ router.post('/updateRate', (req, res) => {
   const id = req.session.serviceProId ;
   const obj = [newRate,id];
 
-    const query = 'UPDATE service_provider SET rate = ? WHERE serviceproviderid = ?';
+    const query = 'UPDATE service_provider SET rate = ? WHERE serviceprovider_id = ?';
     db.query(query,obj,(err, results) => {
       if (err) 
         {
