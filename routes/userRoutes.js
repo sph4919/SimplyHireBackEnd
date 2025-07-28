@@ -217,8 +217,8 @@ router.post('/check', (req, res) => {
       {
           res.status(500).json({ message: 'Server is learning french plz try again' });
       }
-
-      if(result.length > 0)
+      console.log(result.length); /// for debuggging
+      if(result.length === 1 )
       {
         res.status(201).json({ message: 'User Email already exist' });
       }
