@@ -15,7 +15,7 @@ router.post('/serviceUserLogin', (req, res) => {
         res.status(500).json({message:' Server is Down : Please try again :) '});
        }
      
-      if (result.length === 0)
+      if (result.length === 0|| !result)
        {
      
         res.status(401).json({ message: 'Invalid credentials. Please sign up first.' });
