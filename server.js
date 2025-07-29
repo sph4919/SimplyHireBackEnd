@@ -15,7 +15,8 @@ app.use(session({
   saveUninitialized: false,    // don’t set cookie until something’s stored
   cookie: { 
     maxAge: 1000 * 60 * 60,    // 1 hour
-    sameSite: 'lax',           // permit top‐level navigations
+    sameSite: 'none',          
+    secure: process.env.NODE_ENV === 'production',
     path: '/'                  // sent to every path on your domain
   }
 }));
