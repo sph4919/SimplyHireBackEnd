@@ -230,6 +230,7 @@ router.post('/check', (req, res) => {
 router.post('/signup', (req, res) => {
   const { name, email, password } = req.body;
 
+   console.log("i got reqyest");
   if (!name || !email || !password) 
     {
      res.status(400).json({ message: 'All fields are required' });
