@@ -8,6 +8,20 @@ const PORT = process.env.PORT || 3000;
 
 app.set('trust proxy', 1);
 
+
+const corsOptions = {
+  origin: [
+    'http://localhost:5500',
+    'http://127.0.0.1:5500',
+    'https://sph4919.github.io'
+  ],
+  methods: ['GET','POST','OPTIONS'],
+  allowedHeaders: ['Content-Type'],
+  credentials: true
+};
+app.use(cors(corsOptions));
+app.use(express.json());
+
 //middle vars
 app.use(session({
   name: 'connect.sid',         // default cookie name
@@ -23,17 +37,8 @@ app.use(session({
 }));
  
 
-const corsOptions = {
-  origin:  [
-    'http://localhost:5500',
-    'http://127.0.0.1:5500',
-    'https://sph4919.github.io'
-  ],   
-  credentials: true                 
-};
 
-app.use(cors(corsOptions));
-app.use(express.json());
+
 
 
 app.get('/', (req, res) => {
