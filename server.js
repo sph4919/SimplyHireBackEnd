@@ -39,8 +39,6 @@ app.use(session({
 
 
 
-
-
 app.get('/', (req, res) => {
   res.send('✅ SimplyHire API is running');
 });

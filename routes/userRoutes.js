@@ -222,6 +222,9 @@ router.post('/check', (req, res) => {
       {
         res.status(201).json({ message: 'User Email already exist' });
       }
+      else{
+         res.status(200).json({ message: 'User Not already exist' });
+      }
 
   });
 });
