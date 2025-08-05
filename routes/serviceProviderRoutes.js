@@ -98,6 +98,9 @@ router.post('/serviceSignUpCheck', (req, res) => {
          {
           res.status(409).json({ message: 'User is already registered as current user' });
          } 
+               else{
+         res.status(200).json({ message: 'User Not already exist' });
+      }
      
     }
   );
