@@ -76,15 +76,16 @@ router.get('/providerListFetch/:serviceType', (req, res) => {
        return res.status(401).json({ error: 'You must log in first' });
      }
      let type = req.params.serviceType;
-     let obj = [type];
-
-     const query = 'SELECT name, shortdescription FROM service_provider WHERE job_type = ?';
+     let filterType = type.substring(0,3) + '%';
+     let obj = [filterType];
+     console.log(obj); //for debugging
+     const query = 'SELECT name, shortdescription FROM service_provider WHERE job_type like ?';
      db.query(query,obj, (err, results) => {
       if (err) 
         {
          res.status(500).json({ message: ' Server is Down : Please try again :) ' });
         }
-      console.log('DB results provider lsit:', results); //for debugging
+      console.log('DB results provider list:', results); //for debugging
       res.status(200).json(results);
     });
 
