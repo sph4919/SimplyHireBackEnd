@@ -154,6 +154,7 @@ router.post('/createRequest', (req, res) => {
       }
      else
       { 
+        console.log("Inserting the data"); // for debugging the data
         res.status(201).json({ message: 'Request created'});
       }
 

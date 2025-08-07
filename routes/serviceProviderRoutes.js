@@ -169,7 +169,7 @@ router.get('/getSettingDetail', (req, res) => {
 const id = req.session.serviceProId ;
 const obj = [id];
 
-      const query = 'SELECT name , rate FROM service_provider WHERE serviceproviderid = ?';
+      const query = 'SELECT name , rate FROM service_provider WHERE serviceprovider_id = ?';
       db.query(query,obj,(err, results) => {
       if (err)
          {
