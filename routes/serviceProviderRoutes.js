@@ -12,13 +12,12 @@ router.post('/serviceUserLogin', (req, res) => {
     db.query(query, [email,password], (err, result) => {
      if(err)
        {
-        res.status(500).json({message:' Server is Down : Please try again :) '});
+        return res.status(500).json({message:' Server is Down : Please try again :) '});
        }
      
       if (!result || result.length === 0)
        {
-     
-        res.status(401).json({ message: 'Invalid credentials. Please sign up first.' });
+        return res.status(401).json({ message: 'Invalid credentials. Please sign up first.' });
        }
        else
        {  
@@ -26,7 +25,7 @@ router.post('/serviceUserLogin', (req, res) => {
         req.session.visted = true;
         console.log(sessionId); //for degugging
         req.session.serviceProId = result[0].serviceprovider_id;
-        res.status(202).json({message:'Correct credentials'});
+        return  res.status(202).json({message:'Correct credentials'});
         
        }
 
@@ -39,11 +38,11 @@ router.get('/sessionChecker',(req,res)=>{
   if(req.sessionID)
         {
            res.clearCookie('connect.sid', { path: '/' });
-           res.status(200).json({message: "session removed"});
+           return res.status(200).json({message: "session removed"});
         }
       else
       {
-        res.status(500).json({message: "Server session removal error"});
+       return  res.status(500).json({message: "Server session removal error"});
       }
    }
 
@@ -61,8 +60,8 @@ router.post('/serviceSignup', (req, res) => {
 
    if (!name || !email || !password || !type || !description || !rate || !shortDescription ) 
     {
-    res.status(400).json({ message: 'All fields are required' });
-  }
+    return res.status(400).json({ message: 'All fields are required' });
+    }
 
 
   const sql = `
@@ -76,12 +75,13 @@ router.post('/serviceSignup', (req, res) => {
     (err, result) => {
       if (err) 
         {
-         res.status(500).json({ message: 'Registartion error plz try again after 30 mins' });
+        return  res.status(500).json({ message: 'Registartion error plz try again after 30 mins' });
         }
-      res.status(201).json({ message: 'Registered successfully', id: result.insertId });
+      return res.status(201).json({ message: 'Registered successfully', id: result.insertId });
     }
   );
 });
+
 
 router.post('/serviceSignUpCheck', (req, res) => {
   const { email } = req.body;
@@ -91,16 +91,17 @@ router.post('/serviceSignUpCheck', (req, res) => {
     (err, rows) => {
       if (err) 
         {
-         res.status(500).json({ message: 'DB error' });
+         return res.status(500).json({ message: 'DB error' });
         }
       console.log(rows.length)
       if (rows.length >=1 )
          {
-          res.status(409).json({ message: 'User is already registered as current user' });
+          return res.status(409).json({ message: 'User is already registered as current user' });
          } 
-               else{
-         res.status(200).json({ message: 'User Not already exist' });
-      }
+        else
+          {
+          return  res.status(200).json({ message: 'User Not already exist' });
+          }
      
     }
   );
@@ -113,10 +114,10 @@ router.get('/listServices', (req, res) => {
     db.query(query,(err, results) => {
       if (err)
          {
-            res.status(500).json({ message: 'Server list fetching error plz contact admin and check your contection' });
+           return  res.status(500).json({ message: 'Server list fetching error plz contact admin and check your contection' });
          }
       console.log('DB results:', results); //for degugginh
-      res.status(200).json(results);
+      return res.status(200).json(results);
     });
 
 });
@@ -125,7 +126,7 @@ router.get('/listServices', (req, res) => {
 router.get('/serviceDashboardFetch', (req, res) => {
 
  if (!req.session.serviceProId) {
-     res.status(401).json({ error: 'You must log in first' });
+    return  res.status(401).json({ error: 'You must log in first' });
      }
   let id = req.session.serviceProId;
   let obj = [id];
@@ -133,10 +134,10 @@ router.get('/serviceDashboardFetch', (req, res) => {
     db.query(query,obj,(err, results) => {
       if (err) 
         {
-         res.status(500).json({ message: 'Server is dancing plz try it after 30 mins' });
+         return res.status(500).json({ message: 'Server is dancing plz try it after 30 mins' });
         }
       console.log('DB results serviceDashboard:', results); //for debugging
-      res.status(200).json(results);
+     return res.status(200).json(results);
     });
 
 });
@@ -152,9 +153,9 @@ router.post('/requestAccepted', (req, res) => {
     db.query(query,obj,(err, results) => {
       if (err) 
       {
-        res.status(500).json({ message: 'Request is not confrim due to server is hot and sweety plz try again' });
+        return res.status(500).json({ message: 'Request is not confrim due to server is hot and sweety plz try again' });
       }
-       res.status(200).json({message : 'request Updated'});
+      return  res.status(200).json({message : 'request Updated'});
     });
 });
 
@@ -163,7 +164,7 @@ router.post('/requestAccepted', (req, res) => {
 router.get('/getSettingDetail', (req, res) => {
    if (!req.session.serviceProId) 
     {
-      res.status(401).json({ error: 'You must log in first' });
+     return  res.status(401).json({ error: 'You must log in first' });
     }
   
 const id = req.session.serviceProId ;
@@ -173,10 +174,10 @@ const obj = [id];
       db.query(query,obj,(err, results) => {
       if (err)
          {
-           res.status(500).json({ message: 'Server is dancing plz try it after 30 mins' });
+           return res.status(500).json({ message: 'Server is dancing plz try it after 30 mins' });
          }
        console.log('DB results:', results); //for debugging
-       res.status(200).json(results);
+       return res.status(200).json(results);
     });
 });
 
@@ -191,9 +192,9 @@ router.post('/updateRate', (req, res) => {
     db.query(query,obj,(err, results) => {
       if (err) 
         {
-          res.status(500).json({ message: 'Server is dancing plz try rate change  after 30 mins or your are not worst that rate' });
+         return  res.status(500).json({ message: 'Server is dancing plz try rate change  after 30 mins or your are not worst that rate' });
         }
-       res.status(200).json({message : 'updated'});
+      return  res.status(200).json({message : 'updated'});
     });
 });
 
@@ -203,10 +204,10 @@ router.get('/sessionCheck', (req, res) => {
 
      if ( !req.session.serviceId )
      {
-     res.status(401).json({ error: 'You must log in first' });
+     return res.status(401).json({ error: 'You must log in first' });
      }
 
-    res.status(200).json({message : "Session is on"});
+    return res.status(200).json({message : "Session is on"});
 
 });
 
@@ -221,7 +222,7 @@ router.post('/logout', (req, res) => {
       return res.status(500).json({ message: 'Logout failed' });
     }
     res.clearCookie('connect.sid', { path: '/' });
-    res.status(200).json({ message: 'Logged out' });
+    return res.status(200).json({ message: 'Logged out' });
   });
 });
 

@@ -13,12 +13,12 @@ const db = require('../db.js');
         
       if(err)
        {
-        res.status(500).json({message:' Server is Down : Please try again :) '});
+        return res.status(500).json({message:' Server is Down : Please try again :) '});
        }
      
       if (!result || result.length === 0)
        {
-        res.status(401).json({ message: 'Invalid credentials. If you are newbiee plz sign Up asap' });
+        return res.status(401).json({ message: 'Invalid credentials. If you are newbiee plz sign Up asap' });
        }
 
        if(result.length === 1)
@@ -27,7 +27,7 @@ const db = require('../db.js');
         req.session.visted = true;
         console.log(sessionId);
         req.session.userId = result[0].user_id;
-        res.status(202).json({message:'Correct credentials'});
+        return res.status(202).json({message:'Correct credentials'});
        }
 
   });
@@ -40,11 +40,11 @@ router.get('/sessionChecker',(req,res)=>{
   if(req.sessionID)
         {
            res.clearCookie('connect.sid', { path: '/' });
-           res.status(200).json({message: "session removed"});
+           return res.status(200).json({message: "session removed"});
         }
       else
       {
-        res.status(500).json({message: "Server session removal error"});
+       return  res.status(500).json({message: "Server session removal error"});
       }
         }
 
@@ -61,10 +61,10 @@ router.get('/sessionChecker',(req,res)=>{
     db.query(query, (err, result) => {
       if (err) 
         {
-         res.status(500).json({message:' Server is Down : Please try again :) '});
+         return res.status(500).json({message:' Server is Down : Please try again :) '});
         }
         console.log(result);
-      res.status(200).json(result);
+     return  res.status(200).json(result);
     });
   });
 
@@ -83,10 +83,10 @@ router.get('/providerListFetch/:serviceType', (req, res) => {
      db.query(query,obj, (err, results) => {
       if (err) 
         {
-         res.status(500).json({ message: ' Server is Down : Please try again :) ' });
+         return res.status(500).json({ message: ' Server is Down : Please try again :) ' });
         }
       console.log('DB results provider list:', results); //for debugging
-      res.status(200).json(results);
+      return res.status(200).json(results);
     });
 
 });
@@ -105,10 +105,10 @@ router.get('/providerInfoFetch/:name', (req, res) => {
     db.query(query,obj, (err, results) => {
       if (err) 
         {
-        res.status(500).json({ message: ' Server is Down : Please try again :) ' });
+         return res.status(500).json({ message: ' Server is Down : Please try again :) ' });
         }
       console.log('DB results profile page:', results); //for debugging
-      res.status(200).json(results);
+      return res.status(200).json(results);
     });
 
 });
@@ -126,11 +126,10 @@ router.post('/findServiceProviderId', (req, res) => {
   db.query(query, obj, (err, result) => {
       if (err) 
       {
-       res.status(500).json({ message: 'Server is drunk' });
+       return res.status(500).json({ message: 'Server is drunk' });
       }
-
         console.log(result); // for debugging only
-        res.status(200).json({result});
+        return res.status(200).json({result});
   });
 });
 
@@ -155,7 +154,7 @@ router.post('/createRequest', (req, res) => {
      else
       { 
         console.log("Inserting the data"); // for debugging the data
-        res.status(201).json({ message: 'Request created'});
+        return res.status(201).json({ message: 'Request created'});
       }
 
   });
@@ -173,12 +172,12 @@ router.get('/userReqFetch', (req, res) => {
   
     const query = 'SELECT description,address,city,state,status,serviceprovider_id FROM request WHERE user_id = ?';
     db.query(query,obj, (err, results) => {
-      if (err) {
-        
-        res.status(500).json({ message: 'Server is busy in dance class. Please get back after 30 min or contact support' });
+      if (err)
+      {  
+        return res.status(500).json({ message: 'Server is busy in dance class. Please get back after 30 min or contact support' });
       }
       console.log('DB results: userReq ', results); //for debugging
-       res.status(200).json(results);
+      return  res.status(200).json(results);
     });
 
 });
@@ -195,9 +194,9 @@ router.get('/providerNameFetch/:providerId', (req, res) => {
     const query = 'SELECT name FROM service_provider WHERE serviceprovider_id = ?';
     db.query(query,obj,(err, results) => {
       if (err) {
-         res.status(500).json({ message: 'Server is swimming plz try agian after 15 min or contact 91111112828 '});
+         return res.status(500).json({ message: 'Server is swimming plz try agian after 15 min or contact 91111112828 '});
       }
-       res.status(200).json(results);
+      return  res.status(200).json(results);
     });
 
 });
@@ -210,23 +209,24 @@ router.post('/check', (req, res) => {
   const {email} = req.body;
     if ( !email ) 
     {
-     res.status(400).json({ message: 'All fields are required' });
+    return  res.status(400).json({ message: 'All fields are required' });
     }
 
   const query = 'SELECT * FROM users WHERE email = ?';
   db.query(query, [email], (err, result) => {
       if (err) 
       {
-          res.status(500).json({ message: 'Server is learning french plz try again' });
+         return  res.status(500).json({ message: 'Server is learning french plz try again' });
       }
       console.log(result.length); /// for debuggging
       if(result.length === 1 )
       {
-        res.status(201).json({ message: 'User Email already exist' });
+        return res.status(201).json({ message: 'User Email already exist' });
       }
-      else{
-         res.status(200).json({ message: 'User Not already exist' });
-      }
+      else
+        {
+         return res.status(200).json({ message: 'User Not already exist' });
+        }
 
   });
 });
@@ -238,16 +238,16 @@ router.post('/signup', (req, res) => {
    console.log("i got reqyest");
   if (!name || !email || !password) 
     {
-     res.status(400).json({ message: 'All fields are required' });
+     return res.status(400).json({ message: 'All fields are required' });
     }
 
   const query = 'INSERT INTO users (name, email, password) VALUES (?, ?, ?)';
   db.query(query, [name, email, password], (err, result) => {
     if (err) 
       {
-      return res.status(500).json({ message: 'Inserting server error plz try again after 30 min or contact the webpage admin' });
+       return res.status(500).json({ message: 'Inserting server error plz try again after 30 min or contact the webpage admin' });
       }
-    res.status(201).json({ message: 'User registered successfully' });
+   return  res.status(201).json({ message: 'User registered successfully' });
   });
 });
 
@@ -257,11 +257,10 @@ router.get('/sessionCheck', (req, res) => {
 
      if (!req.session.userId )
      {
-     
-     res.status(401).json({ error: 'You must log in first' });
+      return res.status(401).json({ error: 'You must log in first' });
      }
 
-    res.status(200).json({message : "Session is on"});
+    return res.status(200).json({message : "Session is on"});
 
 });
 
@@ -271,10 +270,10 @@ router.post('/logout', (req, res) => {
   req.session.destroy(err => {
     if (err) {
       res.clearCookie('connect.sid', { path: '/' });
-      res.status(500).json({ message: 'Logout failed' });
+    return   res.status(500).json({ message: 'Logout failed' });
     }
     res.clearCookie('connect.sid', { path: '/' });
-    res.status(200).json({ message: 'Logged out' });
+   return  res.status(200).json({ message: 'Logged out' });
   });
 });
 
