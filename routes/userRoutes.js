@@ -46,7 +46,7 @@ router.get('/sessionChecker',(req,res)=>{
       {
        return  res.status(500).json({message: "Server session removal error"});
       }
-        }
+    }
 
 )
 
