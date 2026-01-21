@@ -1,7 +1,7 @@
 
 const express = require('express');
 const cors = require('cors');
-const session = require('express-session');
+// const session = require('express-session');
 require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -23,18 +23,18 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 //middle vars
-app.use(session({
-  name: 'connect.sid',         // default cookie name
-  secret: 'Sugnay@simplyhire',
-  resave: false,               // don’t save if unmodified
-  saveUninitialized: false,    // don’t set cookie until something’s stored
-  cookie: { 
-    maxAge: 1000 * 60 * 60,    // 1 hour
-    sameSite: 'none',          
-    secure: process.env.NODE_ENV === 'production',
-    path: '/'                  // sent to every path on your domain
-  }
-}));
+// app.use(session({
+//   name: 'connect.sid',         // default cookie name
+//   secret: 'Sugnay@simplyhire',
+//   resave: false,               // don’t save if unmodified
+//   saveUninitialized: false,    // don’t set cookie until something’s stored
+//   cookie: { 
+//     maxAge: 1000 * 60 * 60,    // 1 hour
+//     sameSite: 'none',          
+//     secure: process.env.NODE_ENV === 'production',
+//     path: '/'                  // sent to every path on your domain
+//   }
+// }));
  
 
 
