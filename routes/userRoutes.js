@@ -23,11 +23,7 @@ const db = require('../db.js');
 
        if(result.length === 1)
        {  
-        const sessionId = req.sessionID;
-        req.session.visted = true;
-        console.log(sessionId);
-        req.session.userId = result[0].user_id;
-        return res.status(202).json({message:'Correct credentials'});
+        return res.status(202).json({message:'Correct credentials',userId:result[0].user_id});
        }
 
   });
@@ -35,27 +31,11 @@ const db = require('../db.js');
 });
 
 
-router.get('/sessionChecker',(req,res)=>{
-
-  if(req.sessionID)
-        {
-           res.clearCookie('connect.sid', { path: '/' });
-           return res.status(200).json({message: "session removed"});
-        }
-      else
-      {
-       return  res.status(500).json({message: "Server session removal error"});
-      }
-    }
-
-)
 
 //main page
  router.get('/mainFetch', (req, res) => {
 
-    if (!req.session.userId) {
-    return res.status(401).json({ error: 'You must log in first' });
-     }
+
 
     const query = 'SELECT service_type, servicedescription FROM services';
     db.query(query, (err, result) => {
@@ -235,7 +215,7 @@ router.post('/check', (req, res) => {
 router.post('/signup', (req, res) => {
   const { name, email, password } = req.body;
 
-   console.log("i got reqyest");
+   console.log("i got reqest");
   if (!name || !email || !password) 
     {
      return res.status(400).json({ message: 'All fields are required' });
