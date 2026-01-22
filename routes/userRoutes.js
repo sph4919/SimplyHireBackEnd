@@ -13,6 +13,7 @@ const db = require('../db.js');
         
       if(err)
        {
+        console.log(err);
         return res.status(500).json({message:' Server is Down : Please try again :) '});
        }
      
@@ -23,6 +24,7 @@ const db = require('../db.js');
 
        if(result.length === 1)
        {  
+        console.log(result[0].userId);
         return res.status(202).json({message:'Correct credentials',userId:result[0].user_id});
        }
 
@@ -31,11 +33,8 @@ const db = require('../db.js');
 });
 
 
-
 //main page
  router.get('/mainFetch', (req, res) => {
-
-
 
     const query = 'SELECT service_type, servicedescription FROM services';
     db.query(query, (err, result) => {
@@ -52,9 +51,7 @@ const db = require('../db.js');
 //providerlist.html
 router.get('/providerListFetch/:serviceType', (req, res) => {
     
-     if (!req.session.userId) {
-       return res.status(401).json({ error: 'You must log in first' });
-     }
+    
      let type = req.params.serviceType;
      let filterType = type.substring(0,3) + '%';
      let obj = [filterType];
