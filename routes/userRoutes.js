@@ -88,10 +88,8 @@ router.get('/providerInfoFetch/:name', (req, res) => {
 
 //request page
 router.post('/findServiceProviderId', (req, res) => {
-   if (!req.session.userId) {
-    return res.status(401).json({ error: 'You must log in first' });
-     }
-  const {personalName} = req.body;
+   
+  let personalName = req.params.personalName;
   const obj = [personalName];
  
   const query = 'SELECT serviceprovider_id FROM service_provider WHERE name = ?';
@@ -107,9 +105,7 @@ router.post('/findServiceProviderId', (req, res) => {
 
 
 router.post('/createRequest', (req, res) => {
-   if (!req.session.userId) {
-    return res.status(401).json({ error: 'You must log in first' });
-     }
+  
   const {street,city,state,zip,description,serviceProviderId } = req.body;
   const userId = req.session.userId;
 
