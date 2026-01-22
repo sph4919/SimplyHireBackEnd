@@ -104,11 +104,10 @@ router.get('/findServiceProviderId/:personalName', (req, res) => {
 });
 
 
-router.post('/createRequest', (req, res) => {
+router.post('/createRequest/:userId', (req, res) => {
   
   const {street,city,state,zip,description,serviceProviderId } = req.body;
-  const userId = req.session.userId;
-
+  const userId = req.params.userId;
   const obj = [userId, serviceProviderId , description , street , city , state , zip ];
   console.log(obj);
 
@@ -130,12 +129,9 @@ router.post('/createRequest', (req, res) => {
 
 
 //userDashboard page
-router.get('/userReqFetch', (req, res) => {
+router.get('/userReqFetch/:userId', (req, res) => {
 
-   if (!req.session.userId) {
-    return res.status(401).json({ error: 'You must log in first' });
-     }
-  let userid = [req.session.userId];
+  let userid = req.params.userId;
   let obj = [userid];
   
     const query = 'SELECT description,address,city,state,status,serviceprovider_id FROM request WHERE user_id = ?';
@@ -153,9 +149,7 @@ router.get('/userReqFetch', (req, res) => {
 
 router.get('/providerNameFetch/:providerId', (req, res) => {
 
-   if (!req.session.userId) {
-    return res.status(401).json({ error: 'You must log in first' });
-     }
+  
     let ProviderId = [ req.params.providerId ]; 
     console.log(ProviderId);
     let obj = [ProviderId];
