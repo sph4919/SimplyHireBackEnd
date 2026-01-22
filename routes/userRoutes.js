@@ -13,7 +13,6 @@ const db = require('../db.js');
         
       if(err)
        {
-        console.log(err);
         return res.status(500).json({message:' Server is Down : Please try again :) '});
        }
      
@@ -51,7 +50,6 @@ const db = require('../db.js');
 //providerlist.html
 router.get('/providerListFetch/:serviceType', (req, res) => {
     
-    
      let type = req.params.serviceType;
      let filterType = type.substring(0,3) + '%';
      let obj = [filterType];
@@ -71,12 +69,9 @@ router.get('/providerListFetch/:serviceType', (req, res) => {
 //profile.html
 router.get('/providerInfoFetch/:name', (req, res) => {
     
-    if (!req.session.userId) {
-    return res.status(401).json({ error: 'You must log in first' });
-     }
-     let type = req.params.name;
-     console.log(type);
-     let obj = [type]
+  
+     let proName = req.params.name;
+     let obj = [proName]
 
     const query = 'SELECT name,description,rate,job_type FROM service_provider WHERE name = ?';
     db.query(query,obj, (err, results) => {
