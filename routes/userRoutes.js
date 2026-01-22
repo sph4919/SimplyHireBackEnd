@@ -214,29 +214,5 @@ router.post('/signup', (req, res) => {
 });
 
 
-//error page 
-router.get('/sessionCheck', (req, res) => {
-
-     if (!req.session.userId )
-     {
-      return res.status(401).json({ error: 'You must log in first' });
-     }
-
-    return res.status(200).json({message : "Session is on"});
-
-});
-
-
-router.post('/logout', (req, res) => {
-
-  req.session.destroy(err => {
-    if (err) {
-      res.clearCookie('connect.sid', { path: '/' });
-    return   res.status(500).json({ message: 'Logout failed' });
-    }
-    res.clearCookie('connect.sid', { path: '/' });
-   return  res.status(200).json({ message: 'Logged out' });
-  });
-});
 
 module.exports = router;
