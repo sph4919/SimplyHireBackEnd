@@ -87,7 +87,7 @@ router.get('/providerInfoFetch/:name', (req, res) => {
 
 
 //request page
-router.post('/findServiceProviderId', (req, res) => {
+router.get('/findServiceProviderId/:personalName', (req, res) => {
    
   let personalName = req.params.personalName;
   const obj = [personalName];
