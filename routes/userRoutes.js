@@ -163,7 +163,48 @@ router.get('/providerNameFetch/:providerId', (req, res) => {
 
 });
 
+//userSetting Page
+router.get('/userSetting/:userId', (req, res) => {
 
+  
+    let userId = [ req.params.userId ]; 
+    console.log(userId);
+    let obj = [userId];
+    const query = 'SELECT name , email FROM users WHERE user_id = ?';
+    db.query(query,obj,(err, results) => {
+      if (err) {
+         return res.status(500).json({ message: 'Conatact Admin there is error in changing'});
+      }
+      return  res.status(200).json(results);
+    });
+
+});
+
+// router.post('/changedInfo', (req, res) => {
+ 
+//   const {changedName} = req.body;
+//     if ( !changedName ) 
+//     {
+//     return  res.status(400).json({ message: 'All fields are required' });
+//     }
+
+//   const query = 'update name  FROM users set to WHERE user_id = ?';
+//   db.query(query, [changedName], (err, result) => {
+//       if (err) 
+//       {
+//          return  res.status(500).json({ message: 'Server is learning french plz try again' });
+//       }
+//       if(result.length === 1 )
+//       {
+//         return res.status(201).json({ message: 'Changed' });
+//       }
+//       else
+//         {
+//          return res.status(200).json({ message: 'User Not already exist' });
+//         }
+
+//   });
+// });
 
 //signup page
 router.post('/check', (req, res) => {
