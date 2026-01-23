@@ -167,7 +167,7 @@ router.get('/providerNameFetch/:providerId', (req, res) => {
 router.get('/userSetting/:userId', (req, res) => {
 
   
-    let userId = [ req.params.userId ]; 
+    let userId = req.params.userId ; 
     console.log(userId);
     let obj = [userId];
     const query = 'SELECT name , email FROM users WHERE user_id = ?';
