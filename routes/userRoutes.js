@@ -182,14 +182,15 @@ router.get('/userSetting/:userId', (req, res) => {
 
 router.post('/changedInfo', (req, res) => {
  
-  const {changedName} = req.body;
+ 
+  const {changedName, userId} = req.body;
     if ( !changedName ) 
     {
     return  res.status(400).json({ message: 'All fields are required' });
     }
-
-  const query = 'update name  FROM users set to WHERE user_id = ?';
-  db.query(query, [changedName], (err, result) => {
+  let obj = [changedName,userId]
+  const query = 'update users set set name = ?  WHERE user_id = ?';
+  db.query(query, obj, (err, result) => {
       if (err) 
       {
          return  res.status(500).json({ message: 'Server is learning french plz try again' });
