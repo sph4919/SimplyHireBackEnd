@@ -180,8 +180,9 @@ router.get('/userSetting/:userId', (req, res) => {
 
 });
 
-router.post('/changedInfo', (req, res) => {
- 
+router.post('/changedName', (req, res) => {
+  
+   console.log("change reqest recieved")
  
   const {changedName, userId} = req.body;
     if ( !changedName ) 
@@ -189,7 +190,7 @@ router.post('/changedInfo', (req, res) => {
     return  res.status(400).json({ message: 'All fields are required' });
     }
   let obj = [changedName,userId]
-  const query = 'update users set set name = ?  WHERE user_id = ?';
+  const query = 'update users set name = ?  WHERE user_id = ?';
   db.query(query, obj, (err, result) => {
       if (err) 
       {
