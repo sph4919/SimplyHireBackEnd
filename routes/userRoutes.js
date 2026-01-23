@@ -180,31 +180,25 @@ router.get('/userSetting/:userId', (req, res) => {
 
 });
 
-// router.post('/changedInfo', (req, res) => {
+router.post('/changedInfo', (req, res) => {
  
-//   const {changedName} = req.body;
-//     if ( !changedName ) 
-//     {
-//     return  res.status(400).json({ message: 'All fields are required' });
-//     }
+  const {changedName} = req.body;
+    if ( !changedName ) 
+    {
+    return  res.status(400).json({ message: 'All fields are required' });
+    }
 
-//   const query = 'update name  FROM users set to WHERE user_id = ?';
-//   db.query(query, [changedName], (err, result) => {
-//       if (err) 
-//       {
-//          return  res.status(500).json({ message: 'Server is learning french plz try again' });
-//       }
-//       if(result.length === 1 )
-//       {
-//         return res.status(201).json({ message: 'Changed' });
-//       }
-//       else
-//         {
-//          return res.status(200).json({ message: 'User Not already exist' });
-//         }
+  const query = 'update name  FROM users set to WHERE user_id = ?';
+  db.query(query, [changedName], (err, result) => {
+      if (err) 
+      {
+         return  res.status(500).json({ message: 'Server is learning french plz try again' });
+      }
+      
+        return res.status(200).json({ message: ' Name Changed' }); 
 
-//   });
-// });
+  });
+});
 
 //signup page
 router.post('/check', (req, res) => {
