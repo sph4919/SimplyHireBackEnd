@@ -33,20 +33,7 @@ router.post('/serviceUserLogin', (req, res) => {
 
 });
 
-router.get('/sessionChecker',(req,res)=>{
 
-  if(req.sessionID)
-        {
-           res.clearCookie('connect.sid', { path: '/' });
-           return res.status(200).json({message: "session removed"});
-        }
-      else
-      {
-       return  res.status(500).json({message: "Server session removal error"});
-      }
-   }
-
-)
 
 
 
@@ -125,9 +112,7 @@ router.get('/listServices', (req, res) => {
 //dashboard 
 router.get('/serviceDashboardFetch', (req, res) => {
 
- if (!req.session.serviceProId) {
-    return  res.status(401).json({ error: 'You must log in first' });
-     }
+
   let id = req.session.serviceProId;
   let obj = [id];
     const query = 'SELECT request_id, description , address , city , state , zip , status  FROM request WHERE serviceprovider_id = ?';
@@ -162,10 +147,7 @@ router.post('/requestAccepted', (req, res) => {
 
 //providersetting
 router.get('/getSettingDetail', (req, res) => {
-   if (!req.session.serviceProId) 
-    {
-     return  res.status(401).json({ error: 'You must log in first' });
-    }
+
   
 const id = req.session.serviceProId ;
 const obj = [id];
@@ -199,32 +181,8 @@ router.post('/updateRate', (req, res) => {
 });
 
 
-//session check
-router.get('/sessionCheck', (req, res) => {
-
-     if ( !req.session.serviceId )
-     {
-     return res.status(401).json({ error: 'You must log in first' });
-     }
-
-    return res.status(200).json({message : "Session is on"});
-
-});
 
 
-//logout logic
-router.post('/logout', (req, res) => {
-
-  req.session.destroy(err => {
-    if (err) {
-      console.error('Session destroy error:', err);
-      res.clearCookie('connect.sid', { path: '/' });
-      return res.status(500).json({ message: 'Logout failed' });
-    }
-    res.clearCookie('connect.sid', { path: '/' });
-    return res.status(200).json({ message: 'Logged out' });
-  });
-});
 
 
 
