@@ -143,10 +143,10 @@ router.post('/requestAccepted', (req, res) => {
 
 
 //providersetting
-router.get('/getSettingDetail', (req, res) => {
+router.get('/getSettingDetail/:providerId', (req, res) => {
 
   
-const id = req.session.serviceProId ;
+const id = req.params.providerId;
 const obj = [id];
 
       const query = 'SELECT name , rate FROM service_provider WHERE serviceprovider_id = ?';
@@ -163,8 +163,7 @@ const obj = [id];
 
 router.post('/updateRate', (req, res) => {
   
-  const {newRate} = req.body;
-  const id = req.session.serviceProId ;
+  const {newRate,providerId} = req.body;
   const obj = [newRate,id];
 
     const query = 'UPDATE service_provider SET rate = ? WHERE serviceprovider_id = ?';
