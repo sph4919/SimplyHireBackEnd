@@ -21,11 +21,8 @@ router.post('/serviceUserLogin', (req, res) => {
        }
        else
        {  
-        const sessionId = req.sessionID;
-        req.session.visted = true;
-        console.log(sessionId); //for degugging
-        req.session.serviceProId = result[0].serviceprovider_id;
-        return  res.status(202).json({message:'Correct credentials'});
+        
+        return  res.status(202).json({message:'Correct credentials',results: result});
         
        }
 
@@ -179,11 +176,6 @@ router.post('/updateRate', (req, res) => {
       return  res.status(200).json({message : 'updated'});
     });
 });
-
-
-
-
-
 
 
 module.exports = router;
