@@ -21,6 +21,7 @@ router.post('/serviceUserLogin', (req, res) => {
        }
        else
        {  
+        console.log("Request arriaved");
         
         return  res.status(202).json({message:'Correct credentials',results: result});
         
