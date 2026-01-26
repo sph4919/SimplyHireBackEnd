@@ -108,10 +108,10 @@ router.get('/listServices', (req, res) => {
 });
 
 //dashboard 
-router.get('/serviceDashboardFetch/:providerId', (req, res) => {
+router.get('/serviceDashboardFetch/:serviceproviderId', (req, res) => {
 
 
-  let id = req.params.providerId;
+  let id = req.params.serviceproviderId;
   let obj = [id];
     const query = 'SELECT request_id, description , address , city , state , zip , status  FROM request WHERE serviceprovider_id = ?';
     db.query(query,obj,(err, results) => {
