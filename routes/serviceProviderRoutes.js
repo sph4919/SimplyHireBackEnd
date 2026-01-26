@@ -34,7 +34,6 @@ router.post('/serviceUserLogin', (req, res) => {
 
 
 
-
 // serviceSignup
 router.post('/serviceSignup', (req, res) => {
   const {
