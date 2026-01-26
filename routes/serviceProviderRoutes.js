@@ -19,10 +19,9 @@ router.post('/serviceUserLogin', (req, res) => {
        {
         return res.status(401).json({ message: 'Invalid credentials. Please sign up first.' });
        }
-       else
-       {  
-        console.log("Request arriaved");
-        
+        if(result.length === 1)
+        {
+      
         return  res.status(202).json({message:'Correct credentials',results: result});
         
        }
