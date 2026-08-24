@@ -202,54 +202,88 @@ router.post('/changedName', (req, res) => {
   });
 });
 
-//signup page
-router.post('/check', (req, res) => {
- 
-  const {email} = req.body;
-    if ( !email ) 
-    {
-    return  res.status(400).json({ message: 'All fields are required' });
+
+// CHECK IF EMAIL ALREADY EXISTS
+router.post("/check", (req, res) => {
+
+    const { email } = req.body;
+
+    if (!email) {
+        return res.status(400).json({
+            message: "Email is required"
+        });
     }
 
-  const query = 'SELECT * FROM users WHERE email = ?';
-  db.query(query, [email], (err, result) => {
-      if (err) 
-      {
-         return  res.status(500).json({ message: 'Server is learning french plz try again' });
-      }
-      console.log(result.length); /// for debuggging
-      if(result.length === 1 )
-      {
-        return res.status(201).json({ message: 'User Email already exist' });
-      }
-      else
-        {
-         return res.status(200);
+    const query = "SELECT * FROM users WHERE email = ?";
+
+    db.query(query, [email], (err, result) => {
+
+        if (err) {
+            console.log(err);
+
+            return res.status(500).json({
+                message: "Server error"
+            });
         }
 
-  });
+        // Email already exists
+        if (result.length > 0) {
+
+            return res.status(409).json({
+                message: "User Email already exists"
+            });
+
+        }
+
+        // Email does not exist
+        return res.status(200).json({
+            message: "Email is available"
+        });
+
+    });
+
 });
 
 
-router.post('/signup', (req, res) => {
-  const { name, email, password } = req.body;
+// SIGNUP USER
+router.post("/signup", (req, res) => {
 
-   console.log("i got reqest");
-  if (!name || !email || !password) 
-    {
-     return res.status(400).json({ message: 'All fields are required' });
+    const { name, email, password } = req.body;
+
+    if (!name || !email || !password) {
+
+        return res.status(400).json({
+            message: "All fields are required"
+        });
+
     }
 
-  const query = 'INSERT INTO users (name, email, password) VALUES (?, ?, ?)';
-  db.query(query, [name, email, password], (err, result) => {
-    if (err) 
-      {
-       return res.status(500).json({ message: 'Inserting server error plz try again after 30 min or contact the webpage admin' });
-      }
-   return  res.status(201).json({ message: 'User registered successfully' });
-  });
-});
+    const query =
+        "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
 
+    db.query(
+        query,
+        [name, email, password],
+        (err, result) => {
+
+            if (err) {
+
+                console.log(err);
+
+                return res.status(500).json({
+                    message: "Error creating user"
+                });
+
+            }
+
+            return res.status(201).json({
+                message: "User registered successfully"
+            });
+
+        }
+    );
+
+});
 
 
 module.exports = router;
